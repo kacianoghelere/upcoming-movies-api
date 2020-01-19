@@ -14,17 +14,18 @@ class MoviesController extends Controller {
     }
 
     public function list(Request $request, $page = 1) {
-        $searchParameter = $request->query('search', null);
+        $searchText = $request->query('searchText', null);
 
         $page = $request->query('page', 1);
 
-        if ($searchParameter) {
-            $moviesList = $this->tmdbService->fetchMovies($searchParameter, $page);
-        } else {
-            $moviesList = $this->tmdbService->fetchUpcomingMovies($page);
+        if ($searchText) {
+            return response()->json($this->tmdbService->fetchMovies(
+                $searchText,
+                $page
+            ));
         }
 
-        return response()->json($moviesList);
+        return response()->json($this->tmdbService->fetchUpcomingMovies($page));
     }
 
     public function showDetails($id) {
