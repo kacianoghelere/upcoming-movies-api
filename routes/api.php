@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('upcoming-movies')->group(function () {
-    Route::get('/', 'UpcomingMoviesController@index');
+Route::prefix('movies')->group(function () {
+    Route::get('/', 'MoviesController@list');
 
-    Route::get('/{id}', 'UpcomingMoviesController@show');
+    Route::get('/{id}', 'MoviesController@showDetails');
 });

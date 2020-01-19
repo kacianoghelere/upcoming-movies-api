@@ -7,20 +7,26 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class TmdbService {
 
-    public function fetchUpcomingMovies($query = '') {
-        return $this->fetchApiResponse('/movie/upcoming');
+    public function fetchMovies($query, $page = 1) {
+        return $this->fetchApiResponse('/search/movie', compact('page', 'query'));
+    }
+
+    public function fetchUpcomingMovies($page = 1) {
+        return $this->fetchApiResponse('/movie/upcoming', compact('page'));
     }
 
     public function fetchMovieDetails($movieId) {
         return $this->fetchApiResponse("/movie/{$movieId}");
     }
 
-    private function fetchApiResponse($urlAppend = '') {
+    private function fetchApiResponse($urlAppend = '', $params = []) {
         $curl = curl_init();
 
-        $tmdbToken = env('TMDB_TOKEN', '');
+        $parameters = http_build_query(array_merge([
+            'api_key' => env('TMDB_TOKEN', '')
+        ], $params));
 
-        $url = "https://api.themoviedb.org/3{$urlAppend}?api_key={$tmdbToken}";
+        $url = "https://api.themoviedb.org/3{$urlAppend}?{$parameters}";
 
         curl_setopt_array($curl, [
             CURLOPT_URL => $url,
