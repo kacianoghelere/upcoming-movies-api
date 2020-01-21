@@ -29,8 +29,6 @@ class MoviesController extends Controller {
     }
 
     public function showDetails($id) {
-        $movieDetails = $this->tmdbService->fetchMovieDetails($id);
-
-        return response()->json($movieDetails);
+        return response()->json($this->tmdbService->fetchMovieDetails($id));
     }
 }
