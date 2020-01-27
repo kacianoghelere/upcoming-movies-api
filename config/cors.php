@@ -6,11 +6,7 @@ return [
         'GET',
         'OPTIONS'
     ],
-    'allowed_origins' => [
-        'movindex.herokuapp.com',
-        '*.herokuapp.com',
-        '*'
-    ],
+    'allowed_origins' => ['*'],
     'allowed_origins_patterns' => [],
     'allowed_headers' => ['*'],
     'exposed_headers' => false,
